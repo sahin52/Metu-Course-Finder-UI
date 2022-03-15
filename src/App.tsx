@@ -9,6 +9,7 @@ import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
 import { Grade, MainFilterInputDto } from "./main-page/types";
 import { BolumComboboxData, AllCourses, GradeData } from "./main-page/util";
+import { getResults } from "./main-page/store";
 
 function App() {
   const [currentGrade, setCurrentGrade] = useState("");
@@ -170,6 +171,7 @@ function App() {
         </div>
         <div className="col-md-3">
           <button
+          className="btn btn-primary"
             onClick={() => {
               console.log("onclick")
               console.log(currentCourse)
@@ -200,13 +202,16 @@ function App() {
         {inputDatas.takenCourses.map((course) => {
           return (
             <>
-              <p>Course</p>
-              <p>{course.courseCode}</p>
-              <p>{course.grade}</p>
+              <div><p>Ders: {course.courseCode} Not: {course.grade} <button className="btn btn-danger" onClick={()=>{setInputDatas({
+                  ...inputDatas,
+                  takenCourses: [...inputDatas.takenCourses.filter(i=>i.courseCode!==course.courseCode),],
+                });}} ><i className="fa fa-times" ></i>sil</button> </p> 
+                </div>
             </>
           );
         })}
       </div>
+      <button className="btn btn-success" onClick={async ()=>{await getResults(inputDatas)}}> Sonuçları Göster</button>
     </div>
   );
 }

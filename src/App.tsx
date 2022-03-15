@@ -19,71 +19,116 @@ function App() {
     takenCourses: [],
     wantsKibrisOdtu: false,
     wantsNormalOdtu: true,
-    minWantedCredit: "",
-    ogrencininBolumu: "",
-    soyad: "",
-    cumGpa: 0,
-    year: 0,
+    minWantedCredit: null,
+    ogrencininBolumu: null,
+    soyad: null,
+    cumGpa: null,
+    year: null,
+    istenilenBolum: null
   });
+  function control(){
+    if(inputDatas.cumGpa===null){
+      alert(`lütfen cumulative GPA'inizi giriniz`);
+      return false;
+    }
+    if(inputDatas.minWantedCredit===null){
+      alert('İstediğiniz Dersin Minimum Kredisini giriniz')
+      return false
+    }
+    if(inputDatas.ogrencininBolumu===null){
+      alert('Lutfen Bolumunuzu giriniz')
+      return false
+    }
+    if(inputDatas.soyad===null || inputDatas.soyad.length===0){
+      alert('Lutfen soyadınızı giriniz')
+      return false
+    }
+    if(inputDatas.year===null || inputDatas.year === NaN){
+      alert('Lutfen yilinizi giriniz')
+      return false
+    }
+
+    return true;
+  }
   return (
     <div className="App">
       <div className="row">
+        
         <div className="col-lg-3">
-          <input
-            type={"radio"}
-            name="kibrisOrOdtu"
-            value="kibris"
-            key={1}
-            onChange={(event) => {
-              setInputDatas({
-                ...inputDatas,
-                wantsKibrisOdtu: true,
-                wantsNormalOdtu: false,
-              });
+        <p>Hangi Okuldan Dersler İstiyorsunuz?</p>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type={"radio"}
+              name="kibrisOrOdtu"
+              value="kibris"
+              key={1}
+              onChange={(event) => {
+                setInputDatas({
+                  ...inputDatas,
+                  wantsKibrisOdtu: true,
+                  wantsNormalOdtu: false,
+                });
 
-              console.log(event.target.checked);
-            }}
-          ></input>
-          <label>Sadece Kıbrıs Odtü İstiyorum</label>
-        </div>
-        <div className="col-lg-3">
-          <input
-            type={"radio"}
-            name="kibrisOrOdtu"
-            value="odtu"
-            defaultChecked={true}
-            key={2}
-            onChange={(event) => {
-              setInputDatas({
-                ...inputDatas,
-                wantsKibrisOdtu: false,
-                wantsNormalOdtu: true,
-              });
-              console.log(event.target.checked);
-            }}
-          ></input>
-          <label>Sadece Ankara Odtü İstiyorum</label>
-        </div>
-        <div className="col-lg-3">
-          <input
-            type={"radio"}
-            name="kibrisOrOdtu"
-            value="ikiside"
-            key={3}
-            onChange={(event) => {
-              setInputDatas({
-                ...inputDatas,
-                wantsKibrisOdtu: true,
-                wantsNormalOdtu: true,
-              });
-              console.log(event.target.checked);
-            }}
-          ></input>
-          <label>Hem Kıbrıs Odtü Hem Ankara Odtü İstiyorum</label>
+                console.log(event.target.checked);
+              }}
+              id="flexRadioDefault1"
+            ></input>
+            <label
+              className="form-check-label justify-content-start d-flex flex"
+              htmlFor="flexRadioDefault1"
+            >
+              Sadece Kıbrıs Odtü İstiyorum
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type={"radio"}
+              name="kibrisOrOdtu"
+              value="odtu"
+              defaultChecked={true}
+              key={2}
+              onChange={(event) => {
+                setInputDatas({
+                  ...inputDatas,
+                  wantsKibrisOdtu: false,
+                  wantsNormalOdtu: true,
+                });
+                console.log(event.target.checked);
+              }}
+              id="flexRadioDefault2"
+            ></input>
+            <label className="form-check-label  justify-content-start d-flex flex" htmlFor="flexRadioDefault2">
+            Sadece Ankara Odtü İstiyorum
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type={"radio"}
+              name="kibrisOrOdtu"
+              value="ikiside"
+              key={3}
+              onChange={(event) => {
+                setInputDatas({
+                  ...inputDatas,
+                  wantsKibrisOdtu: true,
+                  wantsNormalOdtu: true,
+                });
+                console.log(event.target.checked);
+              }}
+              id="flexRadioDefault3"
+            ></input>
+            <label className="form-check-label  justify-content-start d-flex flex" htmlFor="flexRadioDefault3">
+            Hem Kıbrıs Odtü Hem Ankara Odtü İstiyorum
+            </label>
+          </div>
         </div>
       </div>
+      <br/>
       <div className="row">
-        <div className="col-md-3">
+        <div className="col-md-2">
           <label>İstediğiniz Dersin Minimum Kredisi</label>
           <Combobox
             data={["0.00", "2.00", "3.00", "4.00", "5.00", "6.00", "8.00"]}
@@ -95,7 +140,7 @@ function App() {
             }
           ></Combobox>
         </div>
-        <div className="col-md-3">
+        <div className="col-md-2">
           <label>Bölümünüz</label>
           <Combobox
             data={BolumComboboxData}
@@ -107,7 +152,7 @@ function App() {
             }
           ></Combobox>
         </div>
-        <div className="col-md-3">
+        <div className="col-md-2">
           <label>Soyadınızın ilk iki harfi</label>
           <input
             // inputProps={{ required: true, name: "heardAboutUsFrom" }}
@@ -117,7 +162,7 @@ function App() {
             maxLength={2}
           ></input>
         </div>
-        <div className="col-md-3">
+        <div className="col-md-2">
           <label>Cumulative GPA'iniz</label>
           <input
             type="number"
@@ -133,8 +178,6 @@ function App() {
             maxLength={4}
           ></input>
         </div>
-      </div>
-      <div className="row">
         <div className="col-md-3">
           <label>Okuldaki Kaçıncı Yılınız</label>
           <input
@@ -152,45 +195,53 @@ function App() {
             maxLength={4}
           ></input>
         </div>
+      
       </div>
+      
+        
       <div className="row">
-        <p>Alınan dersler</p>
+        <p>Almış Olduğunuz Dersler</p>
       </div>
       <div className="row">
         <div className="col-md-3">
+          <p>Ders Kodu</p>
           <Combobox
             data={AllCourses}
             onSelect={(value) => setCurrentCourse(value as number)}
           />
         </div>
         <div className="col-md-3">
+          <p>Geçme Puanınız</p>
           <Combobox
             data={GradeData}
             onSelect={(value) => setCurrentGrade(value)}
           />
         </div>
         <div className="col-md-3">
+          <br/>
           <button
-          className="btn btn-primary"
+            className="btn btn-primary"
             onClick={() => {
-              console.log("onclick")
-              console.log(currentCourse)
-              console.log(currentGrade)
+              console.log("onclick");
+              console.log(currentCourse);
+              console.log(currentGrade);
               if (
                 inputDatas.takenCourses.filter(
                   (i) => i.courseCode === currentCourse
                 ).length === 0 &&
                 currentCourse !== null &&
                 currentCourse !== undefined &&
-                currentGrade!==null &&
-                currentGrade!==undefined                
-              ){
+                currentGrade !== null &&
+                currentGrade !== undefined
+              ) {
                 setInputDatas({
                   ...inputDatas,
-                  takenCourses: [...inputDatas.takenCourses,{courseCode: currentCourse,grade: currentGrade as Grade}],
+                  takenCourses: [
+                    ...inputDatas.takenCourses,
+                    { courseCode: currentCourse, grade: currentGrade as Grade },
+                  ],
                 });
               }
-                
             }}
           >
             Ekle
@@ -198,20 +249,45 @@ function App() {
         </div>
       </div>
       <div className="row">
-        <p>Deneme</p>
+        <p></p>
         {inputDatas.takenCourses.map((course) => {
           return (
             <>
-              <div><p>Ders: {course.courseCode} Not: {course.grade} <button className="btn btn-danger" onClick={()=>{setInputDatas({
-                  ...inputDatas,
-                  takenCourses: [...inputDatas.takenCourses.filter(i=>i.courseCode!==course.courseCode),],
-                });}} ><i className="fa fa-times" ></i>sil</button> </p> 
-                </div>
+              <div>
+                <p>
+                  Ders: {course.courseCode} Not: {course.grade}{" "}
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => {
+                      setInputDatas({
+                        ...inputDatas,
+                        takenCourses: [
+                          ...inputDatas.takenCourses.filter(
+                            (i) => i.courseCode !== course.courseCode
+                          ),
+                        ],
+                      });
+                    }}
+                  >
+                    <i className="fa fa-times"></i>sil
+                  </button>{" "}
+                </p>
+              </div>
             </>
           );
         })}
       </div>
-      <button className="btn btn-success" onClick={async ()=>{await getResults(inputDatas)}}> Sonuçları Göster</button>
+      <button
+        className="btn btn-success"
+        onClick={async () => {
+          let controlResult = control();
+          if(controlResult=== true)
+            await getResults(inputDatas);
+        }}
+      >
+        {" "}
+        Sonuçları Göster
+      </button>
     </div>
   );
 }

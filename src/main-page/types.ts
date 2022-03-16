@@ -29,4 +29,18 @@ export type MainFilterInputDto = {
     courseCode: number;
     grade: Grade;
   };
+  export type CacheSection = {
+    prereqisites: {};
+    courseCode: number;
+    courseName: string;
+    credit: string;
+    department: string;
+    bolumCode: number;
+    isKibris: boolean;
+    bolumName: string;
+    criterias: [];
+    sectionNumber: number;
+    creditAsFloat: number;
+  };
+  
   

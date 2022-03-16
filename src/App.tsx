@@ -7,13 +7,15 @@ import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
-import { Grade, MainFilterInputDto } from "./main-page/types";
+import { CacheSection, Grade, MainFilterInputDto } from "./main-page/types";
 import { BolumComboboxData, AllCourses, GradeData } from "./main-page/util";
 import { getResults } from "./main-page/store";
+import { Results } from "./main-page/results";
 
 function App() {
   const [currentGrade, setCurrentGrade] = useState("");
   const [currentCourse, setCurrentCourse] = useState(0);
+  const [results,setResults] = useState<CacheSection[]>()
 
   const [inputDatas, setInputDatas] = useState<MainFilterInputDto>({
     takenCourses: [],
@@ -24,9 +26,9 @@ function App() {
     soyad: null,
     cumGpa: null,
     year: null,
-    istenilenBolum: null
+    istenilenBolum: 0
   });
-  function control(){
+  function controlHerSeyGirilmisMi(){
     if(inputDatas.cumGpa===null){
       alert(`lütfen cumulative GPA'inizi giriniz`);
       return false;
@@ -43,7 +45,8 @@ function App() {
       alert('Lutfen soyadınızı giriniz')
       return false
     }
-    if(inputDatas.year===null || inputDatas.year === NaN){
+    console.log(inputDatas.year)
+    if(inputDatas.year===null || Number.isNaN(inputDatas.year)){
       alert('Lutfen yilinizi giriniz')
       return false
     }
@@ -200,7 +203,7 @@ function App() {
       
         
       <div className="row">
-        <p>Almış Olduğunuz Dersler</p>
+        <h5>Almış Olduğunuz Dersler</h5>
       </div>
       <div className="row">
         <div className="col-md-3">
@@ -280,14 +283,20 @@ function App() {
       <button
         className="btn btn-success"
         onClick={async () => {
-          let controlResult = control();
-          if(controlResult=== true)
-            await getResults(inputDatas);
+          let controlResult = controlHerSeyGirilmisMi();
+          
+          if(controlResult=== true){
+            let result = await getResults(inputDatas);
+            setResults(result)
+          }
+            
         }}
       >
         {" "}
         Sonuçları Göster
       </button>
+      <Results sections={results} />
+
     </div>
   );
 }

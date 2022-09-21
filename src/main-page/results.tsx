@@ -47,9 +47,6 @@ export function Results(props: IResultsProps) {
                   </tr>
                 );
               })}
-              <tr>
-                <td>Dummmy</td>
-              </tr>
             </tbody>
           </Table>
         </>

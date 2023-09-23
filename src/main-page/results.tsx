@@ -1,12 +1,7 @@
-import React, { useState } from "react";
-import DropdownList from "react-widgets/DropdownList";
 
-import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
-import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
-import { CacheSection, Grade, MainFilterInputDto } from "./types";
-import { getResults } from "./store";
+import { CacheSection } from "./types";
 import { Table } from "reactstrap";
 
 export interface IResultsProps {

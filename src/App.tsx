@@ -1,9 +1,6 @@
-import React, { useState } from "react";
-import logo from "./logo.svg";
+import { useState } from "react";
 import "./App.css";
-import DropdownList from "react-widgets/DropdownList";
 
-import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";

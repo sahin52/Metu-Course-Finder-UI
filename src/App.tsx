@@ -12,7 +12,7 @@ import { Results } from "./main-page/results";
 function App() {
   const [currentGrade, setCurrentGrade] = useState("");
   const [currentCourse, setCurrentCourse] = useState(0);
-  const [results,setResults] = useState<CacheSection[]>()
+  const [results, setResults] = useState<CacheSection[]>();
 
   const [inputDatas, setInputDatas] = useState<MainFilterInputDto>({
     takenCourses: [],
@@ -23,29 +23,29 @@ function App() {
     soyad: null,
     cumGpa: null,
     year: null,
-    istenilenBolum: 0
+    istenilenBolum: 0,
   });
-  function controlHerSeyGirilmisMi(){
-    if(inputDatas.cumGpa===null){
+  function controlHerSeyGirilmisMi() {
+    if (inputDatas.cumGpa === null) {
       alert(`lütfen cumulative GPA'inizi giriniz`);
       return false;
     }
-    if(inputDatas.minWantedCredit===null){
-      alert('İstediğiniz Dersin Minimum Kredisini giriniz')
-      return false
+    if (inputDatas.minWantedCredit === null) {
+      alert("İstediğiniz Dersin Minimum Kredisini giriniz");
+      return false;
     }
-    if(inputDatas.ogrencininBolumu===null){
-      alert('Lutfen Bolumunuzu giriniz')
-      return false
+    if (inputDatas.ogrencininBolumu === null) {
+      alert("Lutfen Bolumunuzu giriniz");
+      return false;
     }
-    if(inputDatas.soyad===null || inputDatas.soyad.length===0){
-      alert('Lutfen soyadınızı giriniz')
-      return false
+    if (inputDatas.soyad === null || inputDatas.soyad.length === 0) {
+      alert("Lutfen soyadınızı giriniz");
+      return false;
     }
-    console.log(inputDatas.year)
-    if(inputDatas.year===null || Number.isNaN(inputDatas.year)){
-      alert('Lutfen yilinizi giriniz')
-      return false
+    console.log(inputDatas.year);
+    if (inputDatas.year === null || Number.isNaN(inputDatas.year)) {
+      alert("Lutfen yilinizi giriniz");
+      return false;
     }
 
     return true;
@@ -53,9 +53,8 @@ function App() {
   return (
     <div className="App">
       <div className="row">
-        
         <div className="col-lg-3">
-        <p>Hangi Okuldan Dersler İstiyorsunuz?</p>
+          <p>Hangi Okuldan Dersler İstiyorsunuz?</p>
           <div className="form-check">
             <input
               className="form-check-input"
@@ -99,8 +98,11 @@ function App() {
               }}
               id="flexRadioDefault2"
             ></input>
-            <label className="form-check-label  justify-content-start d-flex flex" htmlFor="flexRadioDefault2">
-            Sadece Ankara Odtü İstiyorum
+            <label
+              className="form-check-label  justify-content-start d-flex flex"
+              htmlFor="flexRadioDefault2"
+            >
+              Sadece Ankara Odtü İstiyorum
             </label>
           </div>
           <div className="form-check">
@@ -120,13 +122,16 @@ function App() {
               }}
               id="flexRadioDefault3"
             ></input>
-            <label className="form-check-label  justify-content-start d-flex flex" htmlFor="flexRadioDefault3">
-            Hem Kıbrıs Odtü Hem Ankara Odtü İstiyorum
+            <label
+              className="form-check-label  justify-content-start d-flex flex"
+              htmlFor="flexRadioDefault3"
+            >
+              Hem Kıbrıs Odtü Hem Ankara Odtü İstiyorum
             </label>
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div className="row">
         <div className="col-md-2">
           <label>İstediğiniz Dersin Minimum Kredisi</label>
@@ -195,10 +200,8 @@ function App() {
             maxLength={4}
           ></input>
         </div>
-      
       </div>
-      
-        
+
       <div className="row">
         <h5>Almış Olduğunuz Dersler</h5>
       </div>
@@ -218,7 +221,7 @@ function App() {
           />
         </div>
         <div className="col-md-3">
-          <br/>
+          <br />
           <button
             className="btn btn-primary"
             onClick={() => {
@@ -281,19 +284,20 @@ function App() {
         className="btn btn-success"
         onClick={async () => {
           let controlResult = controlHerSeyGirilmisMi();
-          
-          if(controlResult=== true){
+
+          if (controlResult === true) {
             let result = await getResults(inputDatas);
-            setResults(result)
+            setResults(result);
           }
-            
         }}
       >
         {" "}
         Sonuçları Göster
       </button>
       <Results sections={results} />
-      <a href="mailto:sahinkasap52@outlook.com?subject=Metu Course Finderda Yasadigim Sorun!">Sorun Bildir</a>
+      <a href="mailto:sahinkasap52@outlook.com?subject=Metu Course Finderda Yasadigim Sorun!">
+        Sorun Bildir
+      </a>
     </div>
   );
 }

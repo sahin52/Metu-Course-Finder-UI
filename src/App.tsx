@@ -293,7 +293,7 @@ function App() {
         Sonuçları Göster
       </button>
       <Results sections={results} />
-
+      <a href="mailto:sahinkasap52@outlook.com?subject=Metu Course Finderda Yasadigim Sorun!">Sorun Bildir</a>
     </div>
   );
 }

@@ -1,6 +1,4 @@
 import { MainFilterInputDto, CacheSection, Grade, MinGrade, StartEndGrades, TakenCourseRequestDto } from "./types";
-import axios, { AxiosResponse } from "axios";
-import qs from "qs";
 import { dersler } from "./dersler";
 export async function getResults(input: MainFilterInputDto) {
   let filteredBolums = dersler.bolumler.filter(

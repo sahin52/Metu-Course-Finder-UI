@@ -35,10 +35,10 @@ export function Results(props: IResultsProps) {
                   <tr>
                     <td>{section.bolumCode}</td>
                     <td>{section.bolumName}</td>
-                    <td>{section.courseCode}</td>
-                    <td>{section.courseName}</td>
-                    <td>{section.credit}</td>
-                    <td>{section.sectionNumber}</td>
+                    <td>{section.cc}</td>
+                    <td>{section.cn}</td>
+                    <td>{section.cr}</td>
+                    <td>{section.sn}</td>
                   </tr>
                 );
               })}

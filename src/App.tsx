@@ -228,7 +228,7 @@ function App() {
                   console.log(currentGrade);
                   if (
                     inputDatas.takenCourses.filter(
-                      (i) => i.courseCode === currentCourse
+                      (i) => i.cc === currentCourse
                     ).length === 0 &&
                     currentCourse !== null &&
                     currentCourse !== undefined &&
@@ -240,7 +240,7 @@ function App() {
                       takenCourses: [
                         ...inputDatas.takenCourses,
                         {
-                          courseCode: currentCourse,
+                          cc: currentCourse,
                           grade: currentGrade as Grade,
                         },
                       ],
@@ -259,7 +259,7 @@ function App() {
                 <>
                   <div>
                     <p>
-                      Ders: {course.courseCode} Not: {course.grade}{" "}
+                      Ders: {course.cc} Not: {course.grade}{" "}
                       <button
                         className="btn btn-danger"
                         onClick={() => {
@@ -267,7 +267,7 @@ function App() {
                             ...inputDatas,
                             takenCourses: [
                               ...inputDatas.takenCourses.filter(
-                                (i) => i.courseCode !== course.courseCode
+                                (i) => i.cc !== course.cc
                               ),
                             ],
                           });

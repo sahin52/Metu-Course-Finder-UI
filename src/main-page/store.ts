@@ -7,19 +7,19 @@ export async function getResults(input: MainFilterInputDto) {
   let sections: CacheSection[] = [];
   filteredBolums.forEach((bolum) => {
     bolum.dersler.forEach((course) => {
-      course.courseInfo.sectionlar.forEach((section) => {
+      course.cI.sl.forEach((section) => {
         sections.push({
-          prereqisites: groupBy(course.prerequisite, "SetNo"),
+          prereqisites: groupBy(course.pr, "SetNo"),
           bolumCode: bolum.code,
           bolumName: bolum.name,
-          courseCode: course.courseInfo.courseCode,
-          courseName: course.courseInfo.courseName,
-          credit: course.courseInfo.credit,
-          creditAsFloat: parseFloat(course.courseInfo.credit.substring(0, 4)),
-          department: course.courseInfo.department,
+          cc: course.cI.cc,
+          cn: course.cI.cn,
+          cr: course.cI.cr,
+          creditAsFloat: parseFloat(course.cI.cr.substring(0, 4)),
+          dp: bolum.name,
           isKibris: bolum.isKibris,
-          criterias: section.criteria,
-          sectionNumber: section.sectionNumber,
+          criterias: section.ct,
+          sn: section.sn,
         });
       });
     });
@@ -32,7 +32,7 @@ export async function getResults(input: MainFilterInputDto) {
         (input.wantsNormalOdtu && !section.isKibris)
     )
     .filter(
-      (section) => section.credit.substring(0, 4) >= input.minWantedCredit!
+      (section) => section.cr.substring(0, 4) >= input.minWantedCredit!
     )
     .filter((section) => {
       if (
@@ -50,11 +50,11 @@ export async function getResults(input: MainFilterInputDto) {
       let res =
         Object.keys(section.prereqisites).length === 0 ||
         Object.entries(section.prereqisites).some(([setNo, prerequisites], i) =>
-          prerequisites.every((prerequisite) => {
+          prerequisites.every((pr) => {
             let rez = input.takenCourses.some((inputcourse) => {
               let rezz =
-                inputcourse.courseCode.toString() === prerequisite.CourseCode.toString() &&
-                isGradeGreater(inputcourse.grade, prerequisite.MinGrade);
+                inputcourse.cc.toString() === pr.CourseCode.toString() &&
+                isGradeGreater(inputcourse.grade, pr.MinGrade);
               return rezz;
             });
             return rez;
@@ -65,21 +65,21 @@ export async function getResults(input: MainFilterInputDto) {
     .filter((section) => {
       let res = true;
       if (section.criterias.length === 0) return true;
-      res = section.criterias.some((criteria) => {
+      res = section.criterias.some((ct) => {
         let res =
-          (criteria.givenDept === "ALL" ||
-            criteria.givenDept === input.ogrencininBolumu) &&
-          criteria.startChar < input.soyad! &&
-          criteria.endChar > input.soyad! &&
-          criteria.minCumGpa < input.cumGpa! &&
-          criteria.maxCumGpa > input.cumGpa! &&
-          criteria.minYear < input.year! &&
-          criteria.maxYear > input.year! &&
+          (ct.gd === "ALL" ||
+            ct.gd === input.ogrencininBolumu) &&
+          ct.sc < input.soyad! &&
+          ct.ec > input.soyad! &&
+          ct.mcg < input.cumGpa! &&
+          ct.mxg > input.cumGpa! &&
+          ct.mn < input.year! &&
+          ct.mx > input.year! &&
           getIfGradeOK(
-            criteria.startGrade,
-            criteria.endGrade,
+            ct.sg,
+            ct.eg,
             input.takenCourses.filter(
-              (i) => i.courseCode.toString() === section.courseCode.toString()
+              (i) => i.cc.toString() === section.cc.toString()
             )[0]
           );
         return res;
@@ -215,100 +215,100 @@ function isGradeGreater(grade: Grade, minGrade: MinGrade): boolean {
   return false;
 }
 function getIfGradeOK(
-  startGrade: StartEndGrades,
-  endGrade: StartEndGrades,
+  sg: StartEndGrades,
+  eg: StartEndGrades,
   takenCourse: TakenCourseRequestDto
 ) {
   // if(takenCourse===null || takenCourse===undefined) return false;
   if (isTakenCourseNull()) {
     if (
-      startGrade === "Hic almayanlar veya Basarisizlar (FD ve alti)" ||
-      startGrade === "Hic almayanlar alabilir" ||
-      startGrade === "Herkes alabilir" ||
-      startGrade === "Hic almayanlar veya DD ve alti" ||
-      startGrade === "Hic almayanlar veya CC ve alti" ||
-      startGrade === "Hic almayanlar veya BB ve alti"
+      sg === "Hic almayanlar veya Basarisizlar (FD ve alti)" ||
+      sg === "Hic almayanlar alabilir" ||
+      sg === "Herkes alabilir" ||
+      sg === "Hic almayanlar veya DD ve alti" ||
+      sg === "Hic almayanlar veya CC ve alti" ||
+      sg === "Hic almayanlar veya BB ve alti"
     ) {
       return true;
     }
     return false;
   }
-  if (startGrade === "Hic almayanlar veya Basarisizlar (FD ve alti)") {
+  if (sg === "Hic almayanlar veya Basarisizlar (FD ve alti)") {
     if (takenCourse.grade >= "FD") return true;
     return false;
   }
-  if (startGrade === "Kaldi") {
+  if (sg === "Kaldi") {
     if (takenCourse.grade >= "FD") {
       return true;
     }
     return false;
   }
-  if (startGrade === "CC") {
-    if (endGrade === "CC") {
+  if (sg === "CC") {
+    if (eg === "CC") {
       if (takenCourse.grade === "CC") return true;
       return false;
     }
-    if (endGrade === "NA") {
+    if (eg === "NA") {
       if (takenCourse.grade >= "CC" && takenCourse.grade <= "NA") return true;
       return false;
     }
-    if (endGrade === "FF") {
+    if (eg === "FF") {
       if (takenCourse.grade >= "CC" && takenCourse.grade <= "FF") return true;
       return false;
     }
     return true;
   }
-  if (startGrade === "CB") {
-    if (endGrade === "CB") {
+  if (sg === "CB") {
+    if (eg === "CB") {
       if (takenCourse.grade === "CB") return true;
       return false;
     }
     return true;
   }
-  if (startGrade === "DC") {
-    if (takenCourse.grade >= "DC" && takenCourse.grade <= endGrade) return true;
+  if (sg === "DC") {
+    if (takenCourse.grade >= "DC" && takenCourse.grade <= eg) return true;
     return false;
   }
-  if (startGrade === "FD") {
-    if (takenCourse.grade >= startGrade && takenCourse.grade <= endGrade)
+  if (sg === "FD") {
+    if (takenCourse.grade >= sg && takenCourse.grade <= eg)
       return true;
     return false;
   }
-  if (startGrade === "FF") {
-    if (takenCourse.grade >= startGrade && takenCourse.grade <= endGrade)
+  if (sg === "FF") {
+    if (takenCourse.grade >= sg && takenCourse.grade <= eg)
       return true;
     return false;
   }
-  if (startGrade === "NA") {
-    if (takenCourse.grade >= startGrade && takenCourse.grade <= endGrade)
+  if (sg === "NA") {
+    if (takenCourse.grade >= sg && takenCourse.grade <= eg)
       return true;
     return false;
   }
-  if (startGrade === "Hic almayanlar alabilir") {
+  if (sg === "Hic almayanlar alabilir") {
     if (isTakenCourseNull()) return true;
     return false;
   }
-  if (startGrade === "Consent of dept" || startGrade === "Herkes alabilir") {
+  if (sg === "Consent of dept" || sg === "Herkes alabilir") {
     return true;
   }
-  if (startGrade === "Hic almayanlar veya DD ve alti") {
+  if (sg === "Hic almayanlar veya DD ve alti") {
     if (takenCourse.grade >= "DD") {
       return true;
     }
     return false;
   }
-  if (startGrade === "Hic almayanlar veya CC ve alti") {
+  if (sg === "Hic almayanlar veya CC ve alti") {
     if (takenCourse.grade >= "CC") {
       return true;
     }
     return false;
   }
-  if (startGrade === "U") {
-    if (endGrade === "U") {
+  if (sg === "U") {
+    if (eg === "U") {
       if (takenCourse.grade === "U") return true;
       return false;
     }
-    if (endGrade === "NA") {
+    if (eg === "NA") {
       if (takenCourse.grade === "U" || takenCourse.grade === "NA") {
         return true;
       }
@@ -316,29 +316,29 @@ function getIfGradeOK(
     }
     return true;
   }
-  if (startGrade === "DD") {
-    if (takenCourse.grade >= startGrade && takenCourse.grade <= endGrade)
+  if (sg === "DD") {
+    if (takenCourse.grade >= sg && takenCourse.grade <= eg)
       return true;
     return false;
   }
-  if (startGrade === "Gecti") {
+  if (sg === "Gecti") {
     if (isTakenCourseNull()) return false;
     return true;
   }
-  if (startGrade === "BB") {
-    if (takenCourse.grade >= startGrade && takenCourse.grade <= endGrade)
+  if (sg === "BB") {
+    if (takenCourse.grade >= sg && takenCourse.grade <= eg)
       return true;
     return false;
   }
-  if (startGrade === "AA") {
+  if (sg === "AA") {
     return true;
   }
-  if (startGrade === "BA") {
-    if (takenCourse.grade >= startGrade && takenCourse.grade <= endGrade)
+  if (sg === "BA") {
+    if (takenCourse.grade >= sg && takenCourse.grade <= eg)
       return true;
     return false;
   }
-  if (startGrade === "Hic almayanlar veya BB ve alti") {
+  if (sg === "Hic almayanlar veya BB ve alti") {
     if (takenCourse.grade >= "BB") return true;
     return false;
   }

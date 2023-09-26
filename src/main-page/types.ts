@@ -26,20 +26,20 @@ export type MainFilterInputDto = {
   };
   
   export type TakenCourseRequestDto = {
-    courseCode: number;
+    cc: number;
     grade: Grade;
   };
   export type CacheSection = {
     prereqisites: CachePrerequisite;
-    courseCode: number;
-    courseName: string;
-    credit: string;
-    department: string;
+    cc: number;
+    cn: string;
+    cr: string;
+    dp: string;
     bolumCode: number;
     isKibris: boolean;
     bolumName: string;
     criterias: any[]; // Criteria
-    sectionNumber: number;
+    sn: number;
     creditAsFloat: number;
   };
   export type CachePrerequisite = {
@@ -59,15 +59,15 @@ export type MainFilterInputDto = {
   export type MinGrade = 'DD' | 'S' | 'CB' | 'CC' | 'BB' | 'FF' | 'FD' | 'U';
 
   export interface Criteria {
-    givenDept: string;
-    startChar: string;
-    endChar: string;
-    minCumGpa: number;
-    maxCumGpa: number;
-    minYear: number;
-    maxYear: number;
-    startGrade: StartEndGrades; //"Hic almayanlar alabilir"|"Herkes alabilir";
-    endGrade: StartEndGrades; // "Hic almayanlar alabilir"|"Herkes alabilir";
+    gd: string;
+    sc: string;
+    ec: string;
+    mcg: number;
+    mxg: number;
+    mn: number;
+    mx: number;
+    sg: StartEndGrades; //"Hic almayanlar alabilir"|"Herkes alabilir";
+    eg: StartEndGrades; // "Hic almayanlar alabilir"|"Herkes alabilir";
   }
   
   export type StartEndGrades =

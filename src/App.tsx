@@ -53,7 +53,7 @@ function App() {
   return (
     <div className="App">
       <div className="row">
-        <div className="col-lg-3">
+        <div className="col-lg-3 col-md-6 col-sm-12 col-xs-12">
           <div className="row">
             <div className="">
               <p>Hangi Okuldan Dersler İstiyorsunuz?</p>
@@ -155,18 +155,19 @@ function App() {
                 setInputDatas({ ...inputDatas, ogrencininBolumu: value })
               }
             ></Combobox>
-            <div className="">
-              <label>Soyadınızın ilk iki harfi</label>
+            <div className="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+              <label className="col-xs-12 col-md-6 col-sm-12 col-lg-12">Soyadınızın ilk iki harfi</label>
               <input
                 // inputProps={{ required: true, name: "heardAboutUsFrom" }}
                 onChange={(value) =>
                   setInputDatas({ ...inputDatas, soyad: value.target.value })
                 }
+                // className="col-md-12"
                 maxLength={2}
               ></input>
             </div>
-            <div className="">
-              <label>Cumulative GPA'iniz</label>
+            <div className="col-xs-12">
+              <label className="col-xs-12">Cumulative GPA'iniz</label>
               <input
                 type="number"
                 step="0.01"
@@ -181,8 +182,8 @@ function App() {
                 maxLength={4}
               ></input>
             </div>
-            <div className="">
-              <label>Okuldaki Kaçıncı Yılınız</label>
+            <div className="col-md-12">
+              <label className="col-md-12">Okuldaki Kaçıncı Yılınız</label>
               <input
                 type="number"
                 step="1"
@@ -204,21 +205,21 @@ function App() {
             <h5>Almış Olduğunuz Dersler</h5>
           </div>
           <div className="row">
-            <div className="col-md-3">
+            <div className="col-md-6">
               <p>Ders Kodu</p>
               <Combobox
                 data={AllCourses}
                 onSelect={(value) => setCurrentCourse(value as number)}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-6">
               <p>Geçme Puanınız</p>
               <Combobox
                 data={GradeData}
                 onSelect={(value) => setCurrentGrade(value)}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-12">
               <br />
               <button
                 className="btn btn-primary"
@@ -296,7 +297,7 @@ function App() {
             Sonuçları Göster
           </button>
         </div>
-        <div className="col-lg-3">
+        <div className="col-lg-9 col-md-6 col-sm-12 col-xs-12">
           <Results sections={results} />
         </div>
         <a href="mailto:sahinkasap52@outlook.com?subject=Metu Course Finderda Yasadigim Sorun!">

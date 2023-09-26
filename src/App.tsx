@@ -52,8 +52,9 @@ function App() {
   }
   return (
     <div className="App">
+      <div className="col-lg-3">
       <div className="row">
-        <div className="col-lg-3">
+        <div className="">
           <p>Hangi Okuldan Dersler İstiyorsunuz?</p>
           <div className="form-check">
             <input
@@ -129,11 +130,10 @@ function App() {
               Hem Kıbrıs Odtü Hem Ankara Odtü İstiyorum
             </label>
           </div>
-        </div>
+          </div>
       </div>
       <br />
       <div className="row">
-        <div className="col-md-2">
           <label>İstediğiniz Dersin Minimum Kredisi</label>
           <Combobox
             data={["0.00", "2.00", "3.00", "4.00", "5.00", "6.00", "8.00"]}
@@ -144,8 +144,6 @@ function App() {
               setInputDatas({ ...inputDatas, minWantedCredit: value })
             }
           ></Combobox>
-        </div>
-        <div className="col-md-2">
           <label>Bölümünüz</label>
           <Combobox
             data={BolumComboboxData}
@@ -156,8 +154,7 @@ function App() {
               setInputDatas({ ...inputDatas, ogrencininBolumu: value })
             }
           ></Combobox>
-        </div>
-        <div className="col-md-2">
+        <div className="">
           <label>Soyadınızın ilk iki harfi</label>
           <input
             // inputProps={{ required: true, name: "heardAboutUsFrom" }}
@@ -167,7 +164,7 @@ function App() {
             maxLength={2}
           ></input>
         </div>
-        <div className="col-md-2">
+        <div className="">
           <label>Cumulative GPA'iniz</label>
           <input
             type="number"
@@ -183,7 +180,7 @@ function App() {
             maxLength={4}
           ></input>
         </div>
-        <div className="col-md-3">
+        <div className="">
           <label>Okuldaki Kaçıncı Yılınız</label>
           <input
             type="number"
@@ -294,7 +291,12 @@ function App() {
         {" "}
         Sonuçları Göster
       </button>
+      </div>
+      <div className="col-lg-3">
+
+      
       <Results sections={results} />
+      </div>
       <a href="mailto:sahinkasap52@outlook.com?subject=Metu Course Finderda Yasadigim Sorun!">
         Sorun Bildir
       </a>

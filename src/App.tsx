@@ -52,6 +52,7 @@ function App() {
   }
   return (
     <div className="App">
+      <div className="row">
       <div className="col-lg-3">
       <div className="row">
         <div className="">
@@ -300,6 +301,7 @@ function App() {
       <a href="mailto:sahinkasap52@outlook.com?subject=Metu Course Finderda Yasadigim Sorun!">
         Sorun Bildir
       </a>
+      </div>
     </div>
   );
 }

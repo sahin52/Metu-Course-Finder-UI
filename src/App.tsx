@@ -4,14 +4,12 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
-import { CacheSection, Grade, MainFilterInputDto } from "./main-page/types";
-import { BolumComboboxData, AllCourses, GradeData } from "./main-page/util";
-import { getResults } from "./main-page/store";
 import { Results } from "./main-page/results";
+import { getResults } from "./main-page/store";
+import { CacheSection, MainFilterInputDto } from "./main-page/types";
+import { BolumComboboxData } from "./main-page/util";
 
 function App() {
-  const [currentGrade, setCurrentGrade] = useState("");
-  const [currentCourse, setCurrentCourse] = useState(0);
   const [results, setResults] = useState<CacheSection[]>();
 
   const [inputDatas, setInputDatas] = useState<MainFilterInputDto>({

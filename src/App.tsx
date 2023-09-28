@@ -201,58 +201,7 @@ function App() {
             </div>
           </div>
 
-          <div className="row">
-            <h5>Almış Olduğunuz Dersler</h5>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <p>Ders Kodu</p>
-              <Combobox
-                data={AllCourses}
-                onSelect={(value) => setCurrentCourse(value as number)}
-              />
-            </div>
-            <div className="col-md-6">
-              <p>Geçme Puanınız</p>
-              <Combobox
-                data={GradeData}
-                onSelect={(value) => setCurrentGrade(value)}
-              />
-            </div>
-            <div className="col-md-12">
-              <br />
-              <button
-                className="btn btn-primary"
-                onClick={() => {
-                  console.log("onclick");
-                  console.log(currentCourse);
-                  console.log(currentGrade);
-                  if (
-                    inputDatas.takenCourses.filter(
-                      (i) => i.cc === currentCourse
-                    ).length === 0 &&
-                    currentCourse !== null &&
-                    currentCourse !== undefined &&
-                    currentGrade !== null &&
-                    currentGrade !== undefined
-                  ) {
-                    setInputDatas({
-                      ...inputDatas,
-                      takenCourses: [
-                        ...inputDatas.takenCourses,
-                        {
-                          cc: currentCourse,
-                          grade: currentGrade as Grade,
-                        },
-                      ],
-                    });
-                  }
-                }}
-              >
-                Ekle
-              </button>
-            </div>
-          </div>
+
           <div className="row">
             <p></p>
             {inputDatas.takenCourses.map((course) => {
